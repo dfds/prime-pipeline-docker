@@ -161,6 +161,17 @@ RUN curl -L https://amazon-eks.s3-us-west-2.amazonaws.com/${AWSIAMAUTH_VERSION}/
 
 
 # ========================================
+# ARGO CD CLI
+# ========================================
+
+ENV ARGOCDCLI_VERSION=0.11.2
+
+RUN curl -L https://github.com/argoproj/argo-cd/releases/download/v${ARGOCDCLI_VERSION}/argocd-linux-amd64 -o argocd \
+    && chmod +x argocd \
+    && mv argocd /usr/local/bin/
+
+
+# ========================================
 # TAX SETTINGS (PYTHON)
 # ========================================
 
@@ -170,7 +181,6 @@ ENV LANG=C.UTF-8
 COPY ./src ./src
 
 RUN cd ./src && pipenv install --system --deploy --ignore-pipfile
-
 
 # ========================================
 # END
