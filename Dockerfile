@@ -39,8 +39,14 @@ RUN apt-get update \
 # AWS CLI
 # ========================================
 
+# 1.16.117 requires botocore 1.12.86
+# Not sure how to handle this, pipfile and pipfile.lock best
+# See also https://github.com/aws/aws-cli/issues/3892
+
+ENV AWSCLI_VERSION=1.16.95
+
 RUN python3 -m pip install --upgrade pip \
-    && pip3 install pipenv awscli \
+    && pip3 install pipenv awscli==${AWSCLI_VERSION} \
     && echo "complete -C '$(which aws_completer)' aws" >> ~/.bashrc
 
 
