@@ -170,7 +170,7 @@ RUN curl -L https://amazon-eks.s3-us-west-2.amazonaws.com/${AWSIAMAUTH_VERSION}/
 # ARGO CD CLI
 # ========================================
 
-ENV ARGOCDCLI_VERSION=0.11.2
+ENV ARGOCDCLI_VERSION=0.12.0-rc5
 
 RUN curl -L https://github.com/argoproj/argo-cd/releases/download/v${ARGOCDCLI_VERSION}/argocd-linux-amd64 -o argocd \
     && chmod +x argocd \
