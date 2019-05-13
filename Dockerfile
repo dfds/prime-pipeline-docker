@@ -181,22 +181,19 @@ RUN curl -L https://github.com/argoproj/argo-cd/releases/download/v${ARGOCDCLI_V
 
 
 # ========================================
-# TAX SETTINGS (PYTHON)
+# KAFKA MESSAGE PRODUCER
 # ========================================
 
-ENV LC_ALL=C.UTF-8
-ENV LANG=C.UTF-8
+RUN apt-get install -y kafkacat \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY ./src ./src
-
-RUN cd ./src && pipenv install --system --deploy --ignore-pipfile
 
 # ========================================
 # END
 # ========================================
 
 CMD [ "bash" ]
-
 
 # ========================================
 # ISSUES
