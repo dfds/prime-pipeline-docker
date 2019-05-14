@@ -184,7 +184,8 @@ RUN curl -L https://github.com/argoproj/argo-cd/releases/download/v${ARGOCDCLI_V
 # KAFKA MESSAGE PRODUCER
 # ========================================
 
-RUN apt-get install -y kafkacat \
+RUN apt-get update \
+    && apt-get install -y kafkacat \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
