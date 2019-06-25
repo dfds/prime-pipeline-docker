@@ -191,6 +191,31 @@ RUN apt-get update \
 
 
 # ========================================
+# Manual download providers into prebuild image for debugging
+# ========================================
+
+RUN mkdir -p ~/.terraform.d/plugins/linux_amd64/
+
+RUN curl -L https://releases.hashicorp.com/terraform-provider-aws/1.60.0/terraform-provider-aws_1.60.0_linux_amd64.zip -o terraform-provider-aws_1.60.0_linux_amd64.zip \
+    && unzip terraform-provider-aws_1.60.0_linux_amd64.zip \
+    && rm terraform-provider-aws_1.60.0_linux_amd64.zip \
+    && chmod +x terraform-provider-aws_v1.60.0_x4 \
+    && mv terraform-provider-aws_v1.60.0_x4 ~/.terraform.d/plugins/linux_amd64/ 
+
+RUN curl -L https://releases.hashicorp.com/terraform-provider-http/1.1.1/terraform-provider-http_1.1.1_linux_amd64.zip -o terraform-provider-http_1.1.1_linux_amd64.zip \
+    && unzip terraform-provider-http_1.1.1_linux_amd64.zip \
+    && rm terraform-provider-http_1.1.1_linux_amd64.zip \
+    && chmod +x terraform-provider-http_v1.1.1_x4 \
+    && mv terraform-provider-http_v1.1.1_x4 ~/.terraform.d/plugins/linux_amd64/
+
+RUN curl -L https://releases.hashicorp.com/terraform-provider-null/2.1.2/terraform-provider-null_2.1.2_linux_amd64.zip -o terraform-provider-null_2.1.2_linux_amd64.zip \
+    && unzip terraform-provider-null_2.1.2_linux_amd64.zip \
+    && rm terraform-provider-null_2.1.2_linux_amd64.zip \
+    && chmod +x terraform-provider-null_v2.1.2_x4 \
+    && mv terraform-provider-null_v2.1.2_x4 ~/.terraform.d/plugins/linux_amd64/
+
+
+# ========================================
 # END
 # ========================================
 
