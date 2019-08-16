@@ -17,7 +17,8 @@ RUN apt-get update \
 FROM base
 
 # Explicitly set USER env variable to accomodate issues with golang code being cross-compiled
-ENV USER root
+# Depricated this after issues running as root in Azure DevOps
+# ENV USER root
 
 RUN apt-get update \
     && apt-get install -y curl unzip git bash-completion jq ssh \
