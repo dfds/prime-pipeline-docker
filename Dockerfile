@@ -17,12 +17,9 @@ RUN apt-get update \
 FROM base
 
 RUN apt-get update \
-    && apt-get install -y curl unzip git bash-completion jq ssh \
+    && apt-get install -y curl unzip git bash-completion jq ssh sudo \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
-# explicitly install sudo in a seperate layer.
-RUN apt-get install sudo
 
 # Adding  GitHub public SSH key to known hosts
 RUN ssh -T -o "StrictHostKeyChecking no" -o "PubkeyAuthentication no" git@github.com || true
