@@ -114,7 +114,7 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL
 # HELM
 # ========================================
 
-ENV HELM_VERSION=2.12.3
+ENV HELM_VERSION=2.14.3
 
 RUN curl -L https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm.tgz \
     && tar -zxvf helm.tgz \
