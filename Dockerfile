@@ -16,11 +16,8 @@ RUN apt-get update \
 
 FROM base
 
-# Explicitly set USER env variable to accomodate issues with golang code being cross-compiled
-ENV USER root
-
 RUN apt-get update \
-    && apt-get install -y curl unzip git bash-completion jq ssh \
+    && apt-get install -y curl unzip git bash-completion jq ssh sudo \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
