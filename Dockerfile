@@ -92,7 +92,7 @@ RUN curl -L https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraf
 # TERRAGRUNT
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.16.14
+ENV TERRAGRUNT_VERSION=0.17.4
 
 RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 -o terragrunt \
     && chmod +x terragrunt \
