@@ -64,7 +64,7 @@ RUN apt-get update \
 
 RUN AZ_REPO=$(lsb_release -cs) \
     && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
-        tee /etc/apt/sources.list.d/azure-cli.list
+    tee /etc/apt/sources.list.d/azure-cli.list
 
 RUN apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv \
     --keyserver packages.microsoft.com \
@@ -79,20 +79,20 @@ RUN apt-get update \
 # TERRAFORM
 # ========================================
 
-ENV TERRAFORM_VERSION=0.11.10
+ENV TERRAFORM_VERSION=0.12.20
 
 RUN curl -L https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip \
     && unzip terraform.zip \
     && rm terraform.zip \
     && mv terraform /usr/local/bin/
-    #&& terraform -install-autocomplete
+#&& terraform -install-autocomplete
 
 
 # ========================================
 # TERRAGRUNT
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.17.4
+ENV TERRAGRUNT_VERSION=0.21.11
 
 RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 -o terragrunt \
     && chmod +x terragrunt \
@@ -103,7 +103,7 @@ RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERR
 # KUBECTL
 # ========================================
 
-ENV KUBECTL_VERSION=1.12.0
+ENV KUBECTL_VERSION=1.13.12
 
 RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o kubectl \
     && chmod +x kubectl \
