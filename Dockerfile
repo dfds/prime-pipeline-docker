@@ -79,7 +79,7 @@ RUN apt-get update \
 # TERRAFORM
 # ========================================
 
-ENV TERRAFORM_VERSION=0.12.20
+ENV TERRAFORM_VERSION=0.12.24
 
 RUN curl -L https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip \
     && unzip terraform.zip \
