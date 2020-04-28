@@ -25,50 +25,42 @@ RUN apt-get update \
 RUN ssh -T -o "StrictHostKeyChecking no" -o "PubkeyAuthentication no" git@github.com || true
 
 
-# ========================================
-# PYTHON
-# ========================================
+# # ========================================
+# # PYTHON
+# # ========================================
 
-RUN apt-get update \
-    && apt-get install -y python python-pip python3 python3-pip \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
+# RUN apt-get update \
+#     && apt-get install -y python python-pip python3 python3-pip \
+#     && apt-get clean \
+#     && rm -rf /var/lib/apt/lists/*
 
 # ========================================
 # AWS CLI
 # ========================================
 
-# 1.16.117 requires botocore 1.12.86
-# Not sure how to handle this, pipfile and pipfile.lock best
-# See also https://github.com/aws/aws-cli/issues/3892
+# Always install newest version
+# Doesn't seem to allow version lock https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
 
-ENV AWSCLI_VERSION=1.16.95
-
-RUN python3 -m pip install --upgrade pip \
-    && pip3 install pipenv awscli==${AWSCLI_VERSION} \
-    && echo "complete -C '$(which aws_completer)' aws" >> ~/.bashrc
-
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install \
+    && rm -rf ./aws \
+    && rm awscliv2.zip
 
 # ========================================
 # AZURE CLI
 # https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
 # ========================================
 
-ENV AZURECLI_VERSION=2.0.55-1~stretch
+ENV AZURECLI_VERSION=2.5.0-1~stretch
 
 RUN apt-get update \
-    && apt-get install -y apt-transport-https lsb-release software-properties-common dirmngr \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get install -y ca-certificates curl apt-transport-https lsb-release gnupg
+
+RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
 
 RUN AZ_REPO=$(lsb_release -cs) \
-    && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
-        tee /etc/apt/sources.list.d/azure-cli.list
-
-RUN apt-key --keyring /etc/apt/trusted.gpg.d/Microsoft.gpg adv \
-    --keyserver packages.microsoft.com \
-    --recv-keys BC528686B50D79E339D3721CEB3E94ADBE1229CF
+    && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list
 
 RUN apt-get update \
     && apt-get install azure-cli=${AZURECLI_VERSION} \
@@ -79,20 +71,20 @@ RUN apt-get update \
 # TERRAFORM
 # ========================================
 
-ENV TERRAFORM_VERSION=0.11.10
+ENV TERRAFORM_VERSION=0.12.24
 
 RUN curl -L https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip \
     && unzip terraform.zip \
     && rm terraform.zip \
-    && mv terraform /usr/local/bin/
-    #&& terraform -install-autocomplete
+    && mv terraform /usr/local/bin/ \
+    && terraform -install-autocomplete
 
 
 # ========================================
 # TERRAGRUNT
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.16.14
+ENV TERRAGRUNT_VERSION=0.23.12
 
 RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 -o terragrunt \
     && chmod +x terragrunt \
@@ -103,7 +95,7 @@ RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERR
 # KUBECTL
 # ========================================
 
-ENV KUBECTL_VERSION=1.12.0
+ENV KUBECTL_VERSION=1.18.2
 
 RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o kubectl \
     && chmod +x kubectl \
@@ -140,7 +132,7 @@ RUN curl -L https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}
 # AWS IAM AUTHENTICATOR
 # ========================================
 
-ENV AWSIAMAUTH_VERSION=1.10.3/2018-07-26
+ENV AWSIAMAUTH_VERSION=1.15.10/2020-02-22
 
 RUN curl -L https://amazon-eks.s3-us-west-2.amazonaws.com/${AWSIAMAUTH_VERSION}/bin/linux/amd64/aws-iam-authenticator -o aws-iam-authenticator \
     && chmod +x aws-iam-authenticator \
@@ -170,11 +162,11 @@ RUN curl -L https://amazon-eks.s3-us-west-2.amazonaws.com/${AWSIAMAUTH_VERSION}/
 # ARGO CD CLI
 # ========================================
 
-ENV ARGOCDCLI_VERSION=0.12.0
+# ENV ARGOCDCLI_VERSION=0.12.0
 
-RUN curl -L https://github.com/argoproj/argo-cd/releases/download/v${ARGOCDCLI_VERSION}/argocd-linux-amd64 -o argocd \
-    && chmod +x argocd \
-    && mv argocd /usr/local/bin/
+# RUN curl -L https://github.com/argoproj/argo-cd/releases/download/v${ARGOCDCLI_VERSION}/argocd-linux-amd64 -o argocd \
+#     && chmod +x argocd \
+#     && mv argocd /usr/local/bin/
 
 
 # ========================================
