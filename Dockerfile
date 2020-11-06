@@ -74,7 +74,7 @@ RUN apt-get update \
 # TERRAFORM
 # ========================================
 
-ENV TERRAFORM_VERSION=0.12.26
+ENV TERRAFORM_VERSION=0.13.5
 
 RUN curl -L https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip \
     && unzip terraform.zip \
@@ -87,7 +87,7 @@ RUN curl -L https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraf
 # TERRAGRUNT
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.23.31
+ENV TERRAGRUNT_VERSION=0.25.5
 
 RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 -o terragrunt \
     && chmod +x terragrunt \
