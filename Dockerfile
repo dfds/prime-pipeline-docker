@@ -38,10 +38,7 @@ RUN ssh -T -o "StrictHostKeyChecking no" -o "PubkeyAuthentication no" git@github
 # AWS CLI
 # ========================================
 
-# Always install newest version
-# Doesn't seem to allow version lock https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
-
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.10.zip" -o "awscliv2.zip" \
     && unzip awscliv2.zip \
     && ./aws/install \
     && rm -rf ./aws \
