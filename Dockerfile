@@ -102,6 +102,13 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL
     && chmod +x kubectl \
     && mv kubectl /usr/local/bin/
 
+# ========================================
+# KUBECTL CROSSPLANE PLUGIN
+# ========================================
+
+RUN curl -sL https://raw.githubusercontent.com/crossplane/crossplane/release-1.0/install.sh | sh \
+    && mv kubectl-crossplane /usr/local/bin
+
 
 # ========================================
 # HELM
