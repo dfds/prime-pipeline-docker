@@ -53,6 +53,8 @@ ENV AWS_PAGER=""
 
 ENV AZURECLI_VERSION=2.5.0-1~stretch
 
+COPY hashicorp.asc $WORKSPACE
+
 RUN apt-get update \
     && apt-get install -y ca-certificates curl apt-transport-https lsb-release gnupg
 
@@ -71,11 +73,17 @@ RUN apt-get update \
 # TERRAFORM
 # ========================================
 
-ENV TERRAFORM_VERSION=0.13.5
+ENV TERRAFORM_VERSION=0.13.7
 
-RUN curl -L https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip \
-    && unzip terraform.zip \
-    && rm terraform.zip \
+RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
+    && curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS \
+    && curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig \
+    && gpg --import hashicorp.asc \
+    && gpg --verify terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig terraform_${TERRAFORM_VERSION}_SHA256SUMS \
+    && grep terraform_${TERRAFORM_VERSION}_linux_amd64.zip terraform_${TERRAFORM_VERSION}_SHA256SUMS > terraform_${TERRAFORM_VERSION}_SHA256SUM \
+    && shasum -a 256 -c terraform_${TERRAFORM_VERSION}_SHA256SUM \
+    && unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
+    && rm terraform_${TERRAFORM_VERSION}_* \
     && mv terraform /usr/local/bin/ \
     && terraform -install-autocomplete
 
