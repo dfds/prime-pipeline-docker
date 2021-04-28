@@ -1,4 +1,0 @@
-# Disallow all, but allow only files from base image or from local src directory
-*
-!/base/**
-!/src/**
