@@ -28,7 +28,7 @@ RUN ssh -T -o "StrictHostKeyChecking no" -o "PubkeyAuthentication no" git@github
 # COPY FILES
 # ========================================
 
-ADD src/*.asc ${WORKSPACE}
+ADD src/*.asc /
 
 # # ========================================
 # # PYTHON
