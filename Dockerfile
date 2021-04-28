@@ -104,9 +104,11 @@ RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERR
 # ========================================
 
 
-ENV KUBECTL_VERSION=1.18.2
+ENV KUBECTL_VERSION=1.20.6
 
 RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o kubectl \
+    && curl -Os https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256 \
+    && bash -c 'echo "$(<kubectl.sha256) kubectl" | sha256sum --check' \
     && chmod +x kubectl \
     && mv kubectl /usr/local/bin/
 
