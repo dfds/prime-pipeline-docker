@@ -43,8 +43,10 @@ ADD src/*.asc /
 # AWS CLI
 # ========================================
 
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.2.0.zip" -o "awscliv2.zip" \
-    && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.2.0.zip.sig"  -o "awscliv2.sig" \
+ENV AWS_CLI_VERSION=2.2.0
+
+RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip -o awscliv2.zip \
+    && curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip.sig  -o awscliv2.sig \
     && gpg --import aws-cli.asc \
     && gpg --verify awscliv2.sig awscliv2.zip \
     && unzip awscliv2.zip \
