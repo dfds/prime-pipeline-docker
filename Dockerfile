@@ -16,8 +16,10 @@ RUN apt-get update \
 
 FROM base
 
+COPY *.asc $WORKSPACE
+
 RUN apt-get update \
-    && apt-get install -y curl unzip git bash-completion jq ssh sudo \
+    && apt-get install -y curl unzip git bash-completion jq ssh sudo gnupg \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -38,11 +40,14 @@ RUN ssh -T -o "StrictHostKeyChecking no" -o "PubkeyAuthentication no" git@github
 # AWS CLI
 # ========================================
 
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.10.zip" -o "awscliv2.zip" \
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.2.0.zip" -o "awscliv2.zip" \
+    && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.2.0.zip.sig"  -o "awscliv2.sig" \
+    && gpg --import aws-cli.asc \
+    && gpg --verify awscliv2.sig awscliv2.zip \
     && unzip awscliv2.zip \
     && ./aws/install \
     && rm -rf ./aws \
-    && rm awscliv2.zip
+    && rm -f awscliv2.zip aws-cli.asc awscliv2.sig
 
 ENV AWS_PAGER=""
 
@@ -53,10 +58,8 @@ ENV AWS_PAGER=""
 
 ENV AZURECLI_VERSION=2.5.0-1~stretch
 
-COPY hashicorp.asc $WORKSPACE
-
 RUN apt-get update \
-    && apt-get install -y ca-certificates curl apt-transport-https lsb-release gnupg
+    && apt-get install -y ca-certificates curl apt-transport-https lsb-release
 
 RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
 
@@ -83,7 +86,7 @@ RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terra
     && grep terraform_${TERRAFORM_VERSION}_linux_amd64.zip terraform_${TERRAFORM_VERSION}_SHA256SUMS > terraform_${TERRAFORM_VERSION}_SHA256SUM \
     && shasum -a 256 -c terraform_${TERRAFORM_VERSION}_SHA256SUM \
     && unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
-    && rm terraform_${TERRAFORM_VERSION}_* \
+    && rm -f terraform_${TERRAFORM_VERSION}_* hashicorp.asc \
     && mv terraform /usr/local/bin/ \
     && terraform -install-autocomplete
 
@@ -110,7 +113,8 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL
     && curl -Os https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256 \
     && bash -c 'echo "$(<kubectl.sha256) kubectl" | sha256sum --check' \
     && chmod +x kubectl \
-    && mv kubectl /usr/local/bin/
+    && mv kubectl /usr/local/bin/ \
+    && rm -f kubectl.sha256
 
 # ========================================
 # KUBECTL CROSSPLANE PLUGIN
