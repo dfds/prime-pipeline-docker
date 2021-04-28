@@ -16,7 +16,7 @@ RUN apt-get update \
 
 FROM base
 
-COPY *.asc $WORKSPACE
+ADD src/*.asc ${WORKSPACE}
 
 RUN apt-get update \
     && apt-get install -y curl unzip git bash-completion jq ssh sudo gnupg \
