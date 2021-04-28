@@ -16,8 +16,6 @@ RUN apt-get update \
 
 FROM base
 
-COPY *.asc $WORKSPACE
-
 RUN apt-get update \
     && apt-get install -y curl unzip git bash-completion jq ssh sudo gnupg \
     && apt-get clean \
@@ -26,6 +24,11 @@ RUN apt-get update \
 # Adding  GitHub public SSH key to known hosts
 RUN ssh -T -o "StrictHostKeyChecking no" -o "PubkeyAuthentication no" git@github.com || true
 
+# ========================================
+# COPY FILES
+# ========================================
+
+ADD src/*.asc ${WORKSPACE}
 
 # # ========================================
 # # PYTHON
