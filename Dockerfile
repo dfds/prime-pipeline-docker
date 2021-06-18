@@ -56,26 +56,6 @@ RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}
 
 ENV AWS_PAGER=""
 
-# ========================================
-# AZURE CLI
-# https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest
-# ========================================
-
-ENV AZURECLI_VERSION=2.5.0-1~stretch
-
-RUN apt-get update \
-    && apt-get install -y ca-certificates curl apt-transport-https lsb-release
-
-RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
-
-
-RUN AZ_REPO=$(lsb_release -cs) \
-    && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list
-
-RUN apt-get update \
-    && apt-get install azure-cli=${AZURECLI_VERSION} \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
 
 # ========================================
 # TERRAFORM
@@ -144,18 +124,6 @@ RUN curl -L https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm
 
 
 # ========================================
-# KOPS
-# ========================================
-
-# ENV KOPS_VERSION=1.11.0
-
-# RUN curl -L https://github.com/kubernetes/kops/releases/download/${KOPS_VERSION}/kops-linux-amd64 -o kops \
-#     && chmod +x ./kops \
-#     && mv ./kops /usr/local/bin/ \
-#     && echo "source <(kops completion bash)" >> ~/.bashrc
-
-
-# ========================================
 # AWS IAM AUTHENTICATOR
 # ========================================
 
@@ -176,24 +144,6 @@ RUN curl -L https://amazon-eks.s3-us-west-2.amazonaws.com/${AWSIAMAUTH_VERSION}/
 #     && tar -zxvf saml2aws.tar.gz \
 #     && rm saml2aws.tar.gz \
 #     && mv saml2aws /usr/local/bin/
-
-
-# ========================================
-# INSPEC
-# ========================================
-
-# TBD
-
-
-# ========================================
-# ARGO CD CLI
-# ========================================
-
-# ENV ARGOCDCLI_VERSION=0.12.0
-
-# RUN curl -L https://github.com/argoproj/argo-cd/releases/download/v${ARGOCDCLI_VERSION}/argocd-linux-amd64 -o argocd \
-#     && chmod +x argocd \
-#     && mv argocd /usr/local/bin/
 
 
 # ========================================
