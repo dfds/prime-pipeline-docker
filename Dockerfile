@@ -2,7 +2,7 @@
 # CREATE UPDATED BASE IMAGE
 # ========================================
 
-FROM debian:stretch-slim AS base
+FROM debian:bullseye-slim AS base
 
 RUN apt-get update \
     && apt-get dist-upgrade -y \
