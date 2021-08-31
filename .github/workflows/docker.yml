@@ -30,12 +30,12 @@ jobs:
             docker-compose --file docker-compose.test.yml build
             docker-compose --file docker-compose.test.yml run sut
           else
-            docker build . --file Dockerfile --tag $IMAGE_NAME:latest
+            docker build . --file Dockerfile --tag localbuild/testimage:latest
           fi
       - name: Run the Anchore scan action itself with GitHub Advanced Security code scanning integration enabled
         uses: anchore/scan-action@main
         with:
-          image: "${{ IMAGE_NAME }}:latest"
+          image: "localbuild/testimage:latest"
           acs-report-enable: true
           fail-build: true
           severity-cutoff: critical
