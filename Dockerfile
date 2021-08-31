@@ -2,7 +2,7 @@
 # CREATE UPDATED BASE IMAGE
 # ========================================
 
-FROM debian:stretch-slim AS base
+FROM debian:bullseye-slim AS base
 
 RUN apt-get update \
     && apt-get dist-upgrade -y \
@@ -43,7 +43,7 @@ ADD src /
 # AWS CLI
 # ========================================
 
-ENV AWS_CLI_VERSION=2.2.0
+ENV AWS_CLI_VERSION=2.2.33
 
 RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip -o awscliv2.zip \
     && curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip.sig  -o awscliv2.sig \
@@ -61,7 +61,7 @@ ENV AWS_PAGER=""
 # TERRAFORM
 # ========================================
 
-ENV TERRAFORM_VERSION=1.0.2
+ENV TERRAFORM_VERSION=1.0.5
 
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
     && curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS \
@@ -80,7 +80,7 @@ RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terra
 # TERRAGRUNT
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.31.0
+ENV TERRAGRUNT_VERSION=0.31.7
 
 RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 -o terragrunt \
     && chmod +x terragrunt \
@@ -92,7 +92,7 @@ RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERR
 # ========================================
 
 
-ENV KUBECTL_VERSION=1.20.6
+ENV KUBECTL_VERSION=1.21.4
 
 RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o kubectl \
     && curl -Os https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256 \
@@ -113,7 +113,7 @@ RUN curl -sL https://raw.githubusercontent.com/crossplane/crossplane/release-1.0
 # HELM
 # ========================================
 
-ENV HELM_VERSION=3.4.0
+ENV HELM_VERSION=3.6.3
 
 RUN curl -L https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm.tgz \
     && tar -zxvf helm.tgz \
