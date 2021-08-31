@@ -35,7 +35,7 @@ jobs:
       - name: Run the Anchore scan action itself with GitHub Advanced Security code scanning integration enabled
         uses: anchore/scan-action@main
         with:
-          image: "${IMAGE_NAME}:latest"
+          image: "${{ IMAGE_NAME }}:latest"
           acs-report-enable: true
           fail-build: true
           severity-cutoff: critical
