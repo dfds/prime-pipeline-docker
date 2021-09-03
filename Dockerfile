@@ -105,7 +105,9 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL
 # KUBECTL CROSSPLANE PLUGIN
 # ========================================
 
-RUN curl -sL https://raw.githubusercontent.com/crossplane/crossplane/release-1.0/install.sh | sh \
+ENV CROSSPLANE_VERSION=v1.4.0
+
+RUN curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | CHANNEL=stable VERSION=${CROSSPLANE_VERSION} sh \
     && mv kubectl-crossplane /usr/local/bin
 
 
