@@ -43,7 +43,7 @@ ADD src /
 # AWS CLI
 # ========================================
 
-ENV AWS_CLI_VERSION=2.2.33
+ENV AWS_CLI_VERSION=2.2.43
 
 RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip -o awscliv2.zip \
     && curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip.sig  -o awscliv2.sig \
@@ -61,7 +61,7 @@ ENV AWS_PAGER=""
 # TERRAFORM
 # ========================================
 
-ENV TERRAFORM_VERSION=1.0.5
+ENV TERRAFORM_VERSION=1.0.8
 
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
     && curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS \
@@ -80,7 +80,7 @@ RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terra
 # TERRAGRUNT
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.31.7
+ENV TERRAGRUNT_VERSION=0.33.2
 
 RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 -o terragrunt \
     && chmod +x terragrunt \
@@ -92,7 +92,7 @@ RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERR
 # ========================================
 
 
-ENV KUBECTL_VERSION=1.21.4
+ENV KUBECTL_VERSION=1.21.5
 
 RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o kubectl \
     && curl -Os https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256 \
@@ -105,7 +105,7 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL
 # KUBECTL CROSSPLANE PLUGIN
 # ========================================
 
-ENV CROSSPLANE_VERSION=v1.4.0
+ENV CROSSPLANE_VERSION=v1.4.1
 
 RUN curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | CHANNEL=stable VERSION=${CROSSPLANE_VERSION} sh \
     && mv kubectl-crossplane /usr/local/bin
@@ -115,7 +115,7 @@ RUN curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/inst
 # HELM
 # ========================================
 
-ENV HELM_VERSION=3.6.3
+ENV HELM_VERSION=3.7.0
 
 RUN curl -L https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm.tgz \
     && tar -zxvf helm.tgz \
@@ -129,7 +129,7 @@ RUN curl -L https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm
 # AWS IAM AUTHENTICATOR
 # ========================================
 
-ENV AWSIAMAUTH_VERSION=1.15.10/2020-02-22
+ENV AWSIAMAUTH_VERSION=1.21.2/2021-07-05
 
 RUN curl -L https://amazon-eks.s3-us-west-2.amazonaws.com/${AWSIAMAUTH_VERSION}/bin/linux/amd64/aws-iam-authenticator -o aws-iam-authenticator \
     && chmod +x aws-iam-authenticator \
