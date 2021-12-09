@@ -61,7 +61,7 @@ ENV AWS_PAGER=""
 # TERRAFORM
 # ========================================
 
-ENV TERRAFORM_VERSION=1.0.8
+ENV TERRAFORM_VERSION=1.1.0
 
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
     && curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS \
@@ -80,7 +80,7 @@ RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terra
 # TERRAGRUNT
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.33.2
+ENV TERRAGRUNT_VERSION=0.35.13
 
 RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 -o terragrunt \
     && chmod +x terragrunt \
@@ -92,7 +92,7 @@ RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERR
 # ========================================
 
 
-ENV KUBECTL_VERSION=1.21.5
+ENV KUBECTL_VERSION=1.21.7
 
 RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o kubectl \
     && curl -Os https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256 \
@@ -105,7 +105,7 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL
 # KUBECTL CROSSPLANE PLUGIN
 # ========================================
 
-ENV CROSSPLANE_VERSION=v1.4.1
+ENV CROSSPLANE_VERSION=v1.5.1
 
 RUN curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | CHANNEL=stable VERSION=${CROSSPLANE_VERSION} sh \
     && mv kubectl-crossplane /usr/local/bin
@@ -115,7 +115,7 @@ RUN curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/inst
 # HELM
 # ========================================
 
-ENV HELM_VERSION=3.7.0
+ENV HELM_VERSION=3.7.2
 
 RUN curl -L https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm.tgz \
     && tar -zxvf helm.tgz \
