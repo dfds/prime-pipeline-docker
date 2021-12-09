@@ -157,6 +157,21 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# ========================================
+# Flux CD
+# ========================================
+
+
+ENV FLUXCD_VERSION=0.24.0
+
+RUN curl -LO https://github.com/fluxcd/flux2/releases/download/v${FLUXCD_VERSION}/flux_${FLUXCD_VERSION}_linux_amd64.tar.gz \
+    && curl -LO https://github.com/fluxcd/flux2/releases/download/v${FLUXCD_VERSION}/flux_${FLUXCD_VERSION}_checksums.txt \
+    && grep flux_${FLUXCD_VERSION}_linux_amd64.tar.gz flux_${FLUXCD_VERSION}_checksums.txt > flux_checksum.txt \
+    && shasum -a 256 -c flux_checksum.txt \
+    && tar zxvf flux_${FLUXCD_VERSION}_linux_amd64.tar.gz \
+    && chmod +x flux \
+    && mv flux /usr/local/bin/ \
+    && rm -f flux_checksum.txt flux_${FLUXCD_VERSION}_linux_amd64.tar.gz flux_${FLUXCD_VERSION}_checksums.txt
 
 # ========================================
 # END
