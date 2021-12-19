@@ -61,7 +61,7 @@ ENV AWS_PAGER=""
 # TERRAFORM
 # ========================================
 
-ENV TERRAFORM_VERSION=1.1.0
+ENV TERRAFORM_VERSION=1.1.2
 
 RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
     && curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS \
