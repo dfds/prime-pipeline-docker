@@ -2,7 +2,7 @@
 # CREATE UPDATED BASE IMAGE
 # ========================================
 
-FROM debian:bullseye-slim AS base
+FROM debian:testing-slim AS base
 
 RUN apt-get update \
     && apt-get dist-upgrade -y \
@@ -30,20 +30,11 @@ RUN ssh -T -o "StrictHostKeyChecking no" -o "PubkeyAuthentication no" git@github
 
 ADD src /
 
-# # ========================================
-# # PYTHON
-# # ========================================
-
-# RUN apt-get update \
-#     && apt-get install -y python python-pip python3 python3-pip \
-#     && apt-get clean \
-#     && rm -rf /var/lib/apt/lists/*
-
 # ========================================
 # AWS CLI
 # ========================================
 
-ENV AWS_CLI_VERSION=2.2.43
+ENV AWS_CLI_VERSION=2.4.7
 
 RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip -o awscliv2.zip \
     && curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip.sig  -o awscliv2.sig \
@@ -80,7 +71,7 @@ RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terra
 # TERRAGRUNT
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.35.13
+ENV TERRAGRUNT_VERSION=0.35.16
 
 RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 -o terragrunt \
     && chmod +x terragrunt \
@@ -92,7 +83,7 @@ RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERR
 # ========================================
 
 
-ENV KUBECTL_VERSION=1.21.7
+ENV KUBECTL_VERSION=1.21.8
 
 RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o kubectl \
     && curl -Os https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256 \
@@ -137,18 +128,6 @@ RUN curl -L https://amazon-eks.s3-us-west-2.amazonaws.com/${AWSIAMAUTH_VERSION}/
 
 
 # ========================================
-# SAML2AWS
-# ========================================
-
-# ENV SAML2AWS_VERSION=2.13.0
-
-# RUN curl -L "https://github.com/Versent/saml2aws/releases/download/v${SAML2AWS_VERSION}/saml2aws_${SAML2AWS_VERSION}_linux_amd64.tar.gz" -o saml2aws.tar.gz \
-#     && tar -zxvf saml2aws.tar.gz \
-#     && rm saml2aws.tar.gz \
-#     && mv saml2aws /usr/local/bin/
-
-
-# ========================================
 # KAFKA MESSAGE PRODUCER
 # ========================================
 
@@ -162,7 +141,7 @@ RUN apt-get update \
 # ========================================
 
 
-ENV FLUXCD_VERSION=0.24.0
+ENV FLUXCD_VERSION=0.24.1
 
 RUN curl -LO https://github.com/fluxcd/flux2/releases/download/v${FLUXCD_VERSION}/flux_${FLUXCD_VERSION}_linux_amd64.tar.gz \
     && curl -LO https://github.com/fluxcd/flux2/releases/download/v${FLUXCD_VERSION}/flux_${FLUXCD_VERSION}_checksums.txt \
@@ -178,15 +157,3 @@ RUN curl -LO https://github.com/fluxcd/flux2/releases/download/v${FLUXCD_VERSION
 # ========================================
 
 CMD [ "bash" ]
-
-# ========================================
-# ISSUES
-# ========================================
-
-# debconf: unable to initialize frontend: Dialog
-# debconf: (TERM is not set, so the dialog frontend is not usable.)
-# debconf: falling back to frontend: Readline
-# debconf: unable to initialize frontend: Readline
-# debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.24.1 /usr/local/share/perl/5.24.1 /usr/lib/x86_64-linux-gnu/perl5/5.24 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl/5.24 /usr/share/perl/5.24 /usr/local/lib/site_perl /usr/lib/x86_64-linux-gnu/perl-base .) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7, <> line 3.)
-# debconf: falling back to frontend: Teletype
-# dpkg-preconfigure: unable to re-open stdin:
