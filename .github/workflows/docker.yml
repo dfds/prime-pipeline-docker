@@ -46,7 +46,11 @@ jobs:
         with:
           sarif_file: results.sarif
 
+      - name: Inspect action SARIF report
+        run: cat ${{ steps.scan.outputs.sarif }}
+
       - name: Create software bill of materials when releasing
         uses: anchore/sbom-action@v0
         with:
           image: localbuild/testimage:latest
+          artifact-name: sbom.spdx
