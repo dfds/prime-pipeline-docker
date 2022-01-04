@@ -32,6 +32,7 @@ jobs:
           else
             docker build . --file Dockerfile --tag localbuild/testimage:latest
           fi
+
       - name: Run the Anchore scan action itself with GitHub Advanced Security code scanning integration enabled
         uses: anchore/scan-action@v3
         with:
@@ -39,7 +40,13 @@ jobs:
           acs-report-enable: true
           fail-build: false
           severity-cutoff: high
+
       - name: Upload Anchore Scan Report
         uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: results.sarif
+
+      - name: Create software bill of materials when releasing
+        uses: anchore/sbom-action@v0
+        with:
+          image: localbuild/testimage:latest
