@@ -36,7 +36,7 @@ ADD src /
 
 ENV AWS_CLI_VERSION=2.4.7
 
-RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip -o awscliv2.zip \
+RUN curl -s https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip -o awscliv2.zip \
     && curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_CLI_VERSION}.zip.sig  -o awscliv2.sig \
     && gpg --import aws-cli.asc \
     && gpg --verify awscliv2.sig awscliv2.zip \
@@ -73,7 +73,7 @@ RUN curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terra
 
 ENV TERRAGRUNT_VERSION=0.35.16
 
-RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 -o terragrunt \
+RUN curl -Ls https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 -o terragrunt \
     && chmod +x terragrunt \
     && mv terragrunt /usr/local/bin/
 
@@ -85,12 +85,31 @@ RUN curl -L https://github.com/gruntwork-io/terragrunt/releases/download/v${TERR
 
 ENV KUBECTL_VERSION=1.21.8
 
-RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o kubectl \
+RUN curl -Ls https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o kubectl \
     && curl -Os https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl.sha256 \
     && bash -c 'echo "$(<kubectl.sha256) kubectl" | sha256sum --check' \
     && chmod +x kubectl \
     && mv kubectl /usr/local/bin/ \
     && rm -f kubectl.sha256
+
+
+# ========================================
+# KUSTOMIZE
+# ========================================
+
+
+ENV KUSTOMIZE_VERSION=4.5.2
+
+RUN curl -LOs https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz \
+    && curl -Ls https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/checksums.txt -o kustomize_checksums.txt \
+    && grep kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz kustomize_checksums.txt > kustomize_linux_amd64_checksum.txt \
+    && shasum -a 256 -c kustomize_linux_amd64_checksum.txt \
+    && tar -zxvf kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz \
+    && rm kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz \
+    && chmod +x kustomize \
+    && mv kustomize /usr/local/bin/ \
+    && rm -f kustomize_checksums.txt kustomize_linux_amd64_checksum.txt
+
 
 # ========================================
 # KUBECTL CROSSPLANE PLUGIN
@@ -98,7 +117,7 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL
 
 ENV CROSSPLANE_VERSION=v1.5.1
 
-RUN curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | CHANNEL=stable VERSION=${CROSSPLANE_VERSION} sh \
+RUN curl -Ls https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | CHANNEL=stable VERSION=${CROSSPLANE_VERSION} sh \
     && mv kubectl-crossplane /usr/local/bin
 
 
@@ -108,7 +127,7 @@ RUN curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/inst
 
 ENV HELM_VERSION=3.7.2
 
-RUN curl -L https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm.tgz \
+RUN curl -Ls https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm.tgz \
     && tar -zxvf helm.tgz \
     && rm helm.tgz \
     && mv linux-amd64/helm /usr/local/bin/ \
@@ -122,7 +141,7 @@ RUN curl -L https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm
 
 ENV AWSIAMAUTH_VERSION=1.21.2/2021-07-05
 
-RUN curl -L https://amazon-eks.s3-us-west-2.amazonaws.com/${AWSIAMAUTH_VERSION}/bin/linux/amd64/aws-iam-authenticator -o aws-iam-authenticator \
+RUN curl -Ls https://amazon-eks.s3-us-west-2.amazonaws.com/${AWSIAMAUTH_VERSION}/bin/linux/amd64/aws-iam-authenticator -o aws-iam-authenticator \
     && chmod +x aws-iam-authenticator \
     && mv aws-iam-authenticator /usr/local/bin/
 
@@ -143,7 +162,7 @@ RUN apt-get update \
 
 ENV FLUXCD_VERSION=0.24.1
 
-RUN curl -LO https://github.com/fluxcd/flux2/releases/download/v${FLUXCD_VERSION}/flux_${FLUXCD_VERSION}_linux_amd64.tar.gz \
+RUN curl -LOs https://github.com/fluxcd/flux2/releases/download/v${FLUXCD_VERSION}/flux_${FLUXCD_VERSION}_linux_amd64.tar.gz \
     && curl -LO https://github.com/fluxcd/flux2/releases/download/v${FLUXCD_VERSION}/flux_${FLUXCD_VERSION}_checksums.txt \
     && grep flux_${FLUXCD_VERSION}_linux_amd64.tar.gz flux_${FLUXCD_VERSION}_checksums.txt > flux_checksum.txt \
     && shasum -a 256 -c flux_checksum.txt \
