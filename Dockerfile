@@ -136,17 +136,6 @@ RUN curl -Ls https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o hel
 
 
 # ========================================
-# AWS IAM AUTHENTICATOR
-# ========================================
-
-ENV AWSIAMAUTH_VERSION=1.21.2/2021-07-05
-
-RUN curl -Ls https://amazon-eks.s3-us-west-2.amazonaws.com/${AWSIAMAUTH_VERSION}/bin/linux/amd64/aws-iam-authenticator -o aws-iam-authenticator \
-    && chmod +x aws-iam-authenticator \
-    && mv aws-iam-authenticator /usr/local/bin/
-
-
-# ========================================
 # KAFKA MESSAGE PRODUCER
 # ========================================
 
