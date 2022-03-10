@@ -34,7 +34,7 @@ ADD src /
 # AWS CLI
 # ========================================
 
-ENV AWS_CLI_VERSION=2.4.7
+ENV AWS_CLI_VERSION=2.4.24
 
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -56,7 +56,7 @@ ENV AWS_PAGER=""
 # TERRAFORM
 # ========================================
 
-ENV TERRAFORM_VERSION=1.1.2
+ENV TERRAFORM_VERSION=1.1.7
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -78,7 +78,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # TERRAGRUNT
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.35.16
+ENV TERRAGRUNT_VERSION=0.36.3
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
