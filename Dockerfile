@@ -56,7 +56,7 @@ ENV AWS_PAGER=""
 # TERRAFORM
 # ========================================
 
-ENV TERRAFORM_VERSION=1.1.7
+ENV TERRAFORM_VERSION=1.2.2
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -78,7 +78,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # TERRAGRUNT
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.36.3
+ENV TERRAGRUNT_VERSION=0.37.3
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -93,7 +93,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 
-ENV KUBECTL_VERSION=1.21.8
+ENV KUBECTL_VERSION=1.22.10
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -111,7 +111,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 
-ENV KUSTOMIZE_VERSION=4.5.2
+ENV KUSTOMIZE_VERSION=4.5.5
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -131,7 +131,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # KUBECTL CROSSPLANE PLUGIN
 # ========================================
 
-ENV CROSSPLANE_VERSION=v1.5.1
+ENV CROSSPLANE_VERSION=v1.8.1
 
 RUN curl -Ls https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | CHANNEL=stable VERSION=${CROSSPLANE_VERSION} sh \
     && mv kubectl-crossplane /usr/local/bin
@@ -168,7 +168,7 @@ RUN apt-get update \
 # ========================================
 
 
-ENV FLUXCD_VERSION=0.24.1
+ENV FLUXCD_VERSION=0.30.2
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
