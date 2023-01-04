@@ -17,7 +17,7 @@ RUN apt-get update \
 FROM base
 
 RUN apt-get update \
-    && apt-get install -y curl unzip git bash-completion jq ssh sudo gnupg groff \
+    && apt-get install -y curl unzip git bash-completion jq ssh sudo gnupg groff golang \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
