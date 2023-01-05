@@ -34,7 +34,7 @@ ADD src /
 # AWS CLI
 # ========================================
 
-ENV AWS_CLI_VERSION=2.4.24
+ENV AWS_CLI_VERSION=2.7.35
 
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -93,7 +93,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 
-ENV KUBECTL_VERSION=1.22.10
+ENV KUBECTL_VERSION=1.23.15
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
