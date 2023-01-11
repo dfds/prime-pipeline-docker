@@ -168,7 +168,7 @@ RUN apt-get update \
 # ========================================
 
 
-ENV FLUXCD_VERSION=0.30.2
+ENV FLUXCD_VERSION=0.38.2
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
