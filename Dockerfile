@@ -2,7 +2,7 @@
 # CREATE UPDATED BASE IMAGE
 # ========================================
 
-FROM debian:testing-slim AS base
+FROM mcr.microsoft.com/powershell:debian-bullseye-slim AS base
 
 RUN apt-get update \
     && apt-get dist-upgrade -y \
@@ -36,7 +36,6 @@ ADD src /
 
 ENV AWS_CLI_VERSION=2.7.35
 
-
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
     if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
@@ -51,6 +50,9 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 
 ENV AWS_PAGER=""
 
+ENV AWSPOWERSHELL_VERSION=4.1.14
+
+RUN pwsh -Command Install-Module AWSPowerShell.NetCore -Scope AllUsers -Confirm:$false -AcceptLicense -Force -RequiredVersion ${AWSPOWERSHELL_VERSION}
 
 # ========================================
 # TERRAFORM
