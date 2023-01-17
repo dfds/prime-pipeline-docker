@@ -52,7 +52,7 @@ ENV AWS_PAGER=""
 
 ENV AWSPOWERSHELL_VERSION=4.1.14
 
-RUN pwsh -Command Install-Module AWSPowerShell.NetCore -Scope AllUsers -Confirm:$false -AcceptLicense -Force -RequiredVersion ${AWSPOWERSHELL_VERSION}
+RUN pwsh -Command $ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue'; Install-Module AWSPowerShell.NetCore -Scope AllUsers -AcceptLicense -Force -RequiredVersion ${AWSPOWERSHELL_VERSION}
 
 # ========================================
 # TERRAFORM
