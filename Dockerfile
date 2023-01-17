@@ -17,7 +17,7 @@ RUN apt-get update \
 FROM base
 
 RUN apt-get update \
-    && apt-get install -y curl unzip git bash-completion jq ssh sudo gnupg groff golang \
+    && apt-get install -y curl unzip git bash-completion jq ssh sudo gnupg groff \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -183,6 +183,21 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     && chmod +x flux \
     && mv flux /usr/local/bin/ \
     && rm -f flux_checksum.txt flux_${FLUXCD_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz flux_${FLUXCD_VERSION}_checksums.txt
+
+# ========================================
+# Go
+# ========================================
+
+ENV GO_VERSION=1.19.5
+
+RUN export BUILD_ARCHITECTURE=$(uname -m); \
+    if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
+    if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
+    curl -LOs https://go.dev/dl/go${GO_VERSION}.linux-${BUILD_ARCHITECTURE_ARCH}.tar.gz \
+    && tar -C /usr/local -xzf go${GO_VERSION}.linux-${BUILD_ARCHITECTURE_ARCH}.tar.gz \
+    && rm -f go${GO_VERSION}.linux-${BUILD_ARCHITECTURE_ARCH}.tar.gz
+
+ENV PATH="${PATH}:/usr/local/go/bin"
 
 # ========================================
 # END
