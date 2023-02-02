@@ -58,7 +58,7 @@ RUN pwsh -Command Install-Module AWSPowerShell.NetCore -Scope AllUsers -AcceptLi
 # TERRAFORM
 # ========================================
 
-ENV TERRAFORM_VERSION=1.2.2
+ENV TERRAFORM_VERSION=1.3.7
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -80,7 +80,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # TERRAGRUNT
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.37.3
+ENV TERRAGRUNT_VERSION=0.43.1
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
