@@ -80,7 +80,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # TERRAGRUNT
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.43.1
+ENV TERRAGRUNT_VERSION=0.43.2
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
