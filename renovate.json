@@ -37,5 +37,8 @@
         "automerge": false,
         "dependencyDashboard": true,
         "dependencyDashboardApproval": false
-    }]
+    }],
+    "azure-pipelines": {
+        "enabled": true
+    }
 }
