@@ -163,7 +163,8 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 RUN apt-get update \
     && apt-get install -y kafkacat \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && ln -s /usr/bin/kafkacat /usr/bin/kcat
 
 # ========================================
 # Flux CD
