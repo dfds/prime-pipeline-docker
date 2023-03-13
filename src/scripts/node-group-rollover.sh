@@ -10,10 +10,24 @@ if [ $# -lt 2 ]; then
   exit 1
 fi
 
+# Extract the script path to include other scripts
+script_path=$(dirname "$(realpath -s "$0")")
+
 # Extract the cluster name and managed node groups from the arguments
 cluster_name=$1
 shift
 node_groups=$@
+
+function wait_for_cluster() {
+    # Wait for all node groups to be active
+    $script_path/wait-for-ngs.sh $cluster_name
+
+    # Wait for all auto scaling groups to not have all instances in service
+    $script_path/wait-for-asgs.sh $cluster_name
+}
+
+# Wait for outstanding updates
+wait_for_cluster
 
 # Print out the cluster name and node groups
 echo "Scaling the following managed node groups in the $cluster_name cluster:"
@@ -28,13 +42,8 @@ for node_group in $node_groups; do
   eksctl scale nodegroup --cluster=$cluster_name --name=$node_group --nodes=$max_nodes
 done
 
-# Wait for all Node Groups to be active
-echo "Waiting for all Node Groups to be active..."
-./bin/wait-for-ngs.sh $cluster_name
-
-# Wait for all Auto Scaling Groups to not have all instances in service
-echo "Waiting for all Auto Scaling Groups to not all instances in service..."
-./bin/wait-for-asgs.sh $cluster_name
+# Wait for scale up
+wait_for_cluster
 
 # Scale down each managed node group to half the maximum capacity (rounded up)
 for node_group in $node_groups; do
@@ -44,10 +53,5 @@ for node_group in $node_groups; do
   eksctl scale nodegroup --cluster=$cluster_name --name=$node_group --nodes=$target_nodes
 done
 
-# Wait for all Node Groups to be active
-echo "Waiting for all Node Groups to be active..."
-./bin/wait-for-ngs.sh $cluster_name
-
-# Wait for all Auto Scaling Groups to not have all instances in service
-echo "Waiting for all Auto Scaling Groups to not all instances in service..."
-./bin/wait-for-asgs.sh $cluster_name
+# Wait for scale down
+wait_for_cluster

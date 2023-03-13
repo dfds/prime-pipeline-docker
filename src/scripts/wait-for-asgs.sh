@@ -24,6 +24,7 @@ for asg in $asg_list; do
       echo -n "."
     sleep 5
   done
+  echo "- $asg now has all instances in service"
 done
 
 echo "All instances are in service"
