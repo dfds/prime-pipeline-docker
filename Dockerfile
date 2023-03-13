@@ -183,7 +183,6 @@ RUN apt-get update \
 # Flux CD
 # ========================================
 
-
 ENV FLUXCD_VERSION=0.38.2
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -212,6 +211,30 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     && rm -f go${GO_VERSION}.linux-${BUILD_ARCHITECTURE_ARCH}.tar.gz
 
 ENV PATH="${PATH}:/usr/local/go/bin"
+
+# ========================================
+# Eksctl
+# ========================================
+
+ENV EKSCTL_VERSION=0.133.0
+
+RUN export BUILD_ARCHITECTURE=$(uname -m); \
+    if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
+    if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
+    curl -LOs https://github.com/weaveworks/eksctl/releases/download/v${EKSCTL_VERSION}/eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
+    && curl -LO https://github.com/weaveworks/eksctl/releases/download/v${EKSCTL_VERSION}/eksctl_checksums.txt \
+    && grep eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz eksctl_checksums.txt > eksctl_checksum.txt \
+    && shasum -a 256 -c eksctl_checksum.txt \
+    && tar zxvf eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
+    && chmod +x eksctl \
+    && mv eksctl /usr/local/bin/ \
+    && rm -f eksctl_checksum.txt eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz eksctl_checksums.txt
+
+# ========================================
+# Scripts
+# ========================================
+
+COPY src/scripts /usr/local/bin
 
 # ========================================
 # END
