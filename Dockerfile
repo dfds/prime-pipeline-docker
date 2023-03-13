@@ -231,6 +231,12 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     && rm -f eksctl_checksum.txt eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz eksctl_checksums.txt
 
 # ========================================
+# Scripts
+# ========================================
+
+COPY src/scripts /usr/local/bin
+
+# ========================================
 # END
 # ========================================
 
