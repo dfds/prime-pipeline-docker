@@ -34,7 +34,7 @@ ADD src /
 # AWS CLI
 # ========================================
 
-ENV AWS_CLI_VERSION=2.7.35
+ENV AWS_CLI_VERSION=2.11.16
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -71,7 +71,7 @@ RUN pwsh -Command Install-Module AWSPowerShell.NetCore -Scope AllUsers -AcceptLi
 # TERRAFORM
 # ========================================
 
-ENV TERRAFORM_VERSION=1.3.7
+ENV TERRAFORM_VERSION=1.4.6
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -93,7 +93,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # TERRAGRUNT
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.43.2
+ENV TERRAGRUNT_VERSION=0.45.6
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -108,7 +108,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 
-ENV KUBECTL_VERSION=1.24.11
+ENV KUBECTL_VERSION=1.26.4
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -126,7 +126,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 
-ENV KUSTOMIZE_VERSION=4.5.5
+ENV KUSTOMIZE_VERSION=4.5.7
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -156,7 +156,7 @@ RUN curl -Ls https://raw.githubusercontent.com/crossplane/crossplane/master/inst
 # HELM
 # ========================================
 
-ENV HELM_VERSION=3.7.2
+ENV HELM_VERSION=3.11.3
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -216,7 +216,7 @@ ENV PATH="${PATH}:/usr/local/go/bin"
 # Eksctl
 # ========================================
 
-ENV EKSCTL_VERSION=0.133.0
+ENV EKSCTL_VERSION=0.139.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
