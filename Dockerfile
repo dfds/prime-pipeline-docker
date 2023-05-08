@@ -183,7 +183,7 @@ RUN apt-get update \
 # Flux CD
 # ========================================
 
-ENV FLUXCD_VERSION=0.38.2
+ENV FLUXCD_VERSION=0.41.2
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
