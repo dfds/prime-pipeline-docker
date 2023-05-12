@@ -54,17 +54,17 @@ ENV AWS_PAGER=""
 # POWERSHELL
 # ========================================
 
-ENV POWERSHELL_VERSION=7.3.2
-ENV AWSPOWERSHELL_VERSION=4.1.14
+#ENV POWERSHELL_VERSION=7.3.2
+#ENV AWSPOWERSHELL_VERSION=4.1.14
 
-RUN export BUILD_ARCHITECTURE=$(uname -m); \
-    if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=x64; fi; \
-    if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
-    curl -L -o /tmp/powershell.tar.gz https://github.com/PowerShell/PowerShell/releases/download/v${POWERSHELL_VERSION}/powershell-${POWERSHELL_VERSION}-linux-${BUILD_ARCHITECTURE_ARCH}.tar.gz
-RUN mkdir -p /opt/microsoft/powershell/7 && tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7 \
-    && chmod +x /opt/microsoft/powershell/7/pwsh \
-    && ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
-RUN pwsh -Command Install-Module AWSPowerShell.NetCore -Scope AllUsers -AcceptLicense -Force -RequiredVersion ${AWSPOWERSHELL_VERSION}
+#RUN export BUILD_ARCHITECTURE=$(uname -m); \
+#    if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=x64; fi; \
+#    if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
+#    curl -L -o /tmp/powershell.tar.gz https://github.com/PowerShell/PowerShell/releases/download/v${POWERSHELL_VERSION}/powershell-${POWERSHELL_VERSION}-linux-${BUILD_ARCHITECTURE_ARCH}.tar.gz
+#RUN mkdir -p /opt/microsoft/powershell/7 && tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7 \
+#    && chmod +x /opt/microsoft/powershell/7/pwsh \
+#    && ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
+#RUN pwsh -Command Install-Module AWSPowerShell.NetCore -Scope AllUsers -AcceptLicense -Force -RequiredVersion ${AWSPOWERSHELL_VERSION}
 
 
 # ========================================
