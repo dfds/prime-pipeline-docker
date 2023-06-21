@@ -1,0 +1,17 @@
+name: Multi architecture docker build
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  
+  workflow_dispatch:
+
+jobs:
+  shared:
+    uses: dfds/shared-workflows/.github/workflows/automation-multi-build.yml@master
+    secrets: inherit
+    with:
+      image-repo: dfdsdk/prime-pipeline
+      os-archs: "linux/amd64,linux/arm64"
+      docker-readme-path: "./README.md"
+      slack-notification: true
