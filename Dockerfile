@@ -127,16 +127,6 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 
 
 # ========================================
-# KUBECTL CROSSPLANE PLUGIN
-# ========================================
-
-ENV CROSSPLANE_VERSION=v1.8.1
-
-RUN curl -Ls https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | CHANNEL=stable VERSION=${CROSSPLANE_VERSION} sh \
-    && mv kubectl-crossplane /usr/local/bin
-
-
-# ========================================
 # HELM
 # ========================================
 
