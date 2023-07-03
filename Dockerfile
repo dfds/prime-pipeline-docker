@@ -92,7 +92,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 
-ENV KUBECTL_VERSION=1.26.4
+ENV KUBECTL_VERSION=1.27.3
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -124,16 +124,6 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     && chmod +x kustomize \
     && mv kustomize /usr/local/bin/ \
     && rm -f kustomize_checksums.txt kustomize_linux_${BUILD_ARCHITECTURE_ARCH}_checksum.txt
-
-
-# ========================================
-# KUBECTL CROSSPLANE PLUGIN
-# ========================================
-
-ENV CROSSPLANE_VERSION=v1.8.1
-
-RUN curl -Ls https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | CHANNEL=stable VERSION=${CROSSPLANE_VERSION} sh \
-    && mv kubectl-crossplane /usr/local/bin
 
 
 # ========================================
