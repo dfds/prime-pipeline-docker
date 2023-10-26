@@ -34,7 +34,7 @@ ADD src /
 # AWS CLI
 # ========================================
 
-ENV AWS_CLI_VERSION=2.11.16
+ENV AWS_CLI_VERSION=2.13.29
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -92,7 +92,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 
-ENV KUBECTL_VERSION=1.27.3
+ENV KUBECTL_VERSION=1.28.3
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -110,7 +110,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 
-ENV KUSTOMIZE_VERSION=4.5.7
+ENV KUSTOMIZE_VERSION=5.2.1
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -130,7 +130,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # HELM
 # ========================================
 
-ENV HELM_VERSION=3.11.3
+ENV HELM_VERSION=3.13.1
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -157,7 +157,7 @@ RUN apt-get update \
 # Flux CD
 # ========================================
 
-ENV FLUXCD_VERSION=0.41.2
+ENV FLUXCD_VERSION=2.1.2
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -190,7 +190,7 @@ ENV PATH="${PATH}:/usr/local/go/bin"
 # Eksctl
 # ========================================
 
-ENV EKSCTL_VERSION=0.139.0
+ENV EKSCTL_VERSION=0.163.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -208,7 +208,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # k9s
 # ========================================
 
-ENV K9S_VERSION=0.27.3
+ENV K9S_VERSION=0.27.4
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
