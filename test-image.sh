@@ -2,7 +2,7 @@
 aws --version \
 && terraform --version \
 && terragrunt --version \
-&& kubectl version --short --client \
+&& kubectl version --client \
 && kustomize version \
 && helm version \
 && flux --version \
