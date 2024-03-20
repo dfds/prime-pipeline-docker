@@ -227,7 +227,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 
 ENV AZ_VERSION=2.58.0
 
-RUN pip3 install azure-cli==${2.58.0}
+RUN pip3 install azure-cli==${AZ_VERSION}
 
 # ========================================
 # Scripts
