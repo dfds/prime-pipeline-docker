@@ -17,7 +17,7 @@ RUN apt-get update \
 FROM base
 
 RUN apt-get update \
-    && apt-get install -y curl unzip git bash-completion jq ssh sudo gnupg groff gcc vim \
+    && apt-get install -y curl unzip git bash-completion jq ssh sudo gnupg groff gcc vim python3 python3-pip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -218,6 +218,16 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     && chmod +x k9s \
     && rm -rf k9s.tar.gz LICENSE README.md \
     && mv k9s /usr/local/bin/
+
+
+
+# ========================================
+# Azure CLI
+# ========================================
+
+ENV AZ_VERSION=2.58.0
+
+RUN pip3 install azure-cli==${AZ_VERSION}
 
 # ========================================
 # Scripts
