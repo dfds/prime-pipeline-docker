@@ -230,6 +230,18 @@ ENV AZ_VERSION=2.59.0
 RUN pip3 install azure-cli==${AZ_VERSION}
 
 # ========================================
+# 1Password CLI
+# ========================================
+ENV OP_CLI_VERSION v2.29.0
+
+RUN export BUILD_ARCHITECTURE=$(uname -m); \
+    if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
+    if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
+    curl -sSfo op.zip https://cache.agilebits.com/dist/1P/op2/pkg/${OP_CLI_VERSION}/op_linux_${BUILD_ARCHITECTURE_ARCH}_${OP_CLI_VERSION}.zip \
+    && unzip -od /usr/local/bin/ op.zip \
+    && rm op.zip
+
+# ========================================
 # Scripts
 # ========================================
 
