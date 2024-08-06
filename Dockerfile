@@ -55,7 +55,7 @@ ENV AWS_PAGER=""
 # OpenTofu
 # ========================================
 
-ENV OPENTOFU_VERSION=1.7.2
+ENV OPENTOFU_VERSION=1.8.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
