@@ -25,34 +25,35 @@ RUN apt-get update \
 RUN ssh -T -o "StrictHostKeyChecking no" -o "PubkeyAuthentication no" git@github.com || true
 
 # ========================================
-# COPY FILES
+# COPY SCRIPTS AND FILES
 # ========================================
 
-ADD src /
+COPY src/permanent/scripts /usr/local/bin
+
+COPY src/temporary /tmp
 
 # ========================================
-# AWS CLI
+# AWS CLI https://raw.githubusercontent.com/aws/aws-cli/v2/CHANGELOG.rst
 # ========================================
 
-ENV AWS_CLI_VERSION=2.15.38
+ENV AWS_CLI_VERSION=2.17.23
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
     if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
     curl -s https://awscli.amazonaws.com/awscli-exe-linux-${BUILD_ARCHITECTURE}-${AWS_CLI_VERSION}.zip -o awscliv2.zip \
     && curl https://awscli.amazonaws.com/awscli-exe-linux-${BUILD_ARCHITECTURE}-${AWS_CLI_VERSION}.zip.sig  -o awscliv2.sig \
-    && gpg --import aws-cli.asc \
+    && gpg --import /tmp/files/aws-cli.asc \
     && gpg --verify awscliv2.sig awscliv2.zip \
     && unzip awscliv2.zip \
     && ./aws/install \
     && rm -rf ./aws \
-    && rm -f awscliv2.zip aws-cli.asc awscliv2.sig
+    && rm -f awscliv2.zip awscliv2.sig /tmp/files/aws-cli.asc
 
 ENV AWS_PAGER=""
 
-
 # ========================================
-# TERRAFORM
+# TERRAFORM - legacy and version locked
 # ========================================
 
 ENV TERRAFORM_VERSION=1.5.7
@@ -63,21 +64,34 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip \
     && curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS \
     && curl -Os https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig \
-    && gpg --import hashicorp.asc \
+    && gpg --import /tmp/files/hashicorp.asc \
     && gpg --verify terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig terraform_${TERRAFORM_VERSION}_SHA256SUMS \
     && grep terraform_${TERRAFORM_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip terraform_${TERRAFORM_VERSION}_SHA256SUMS > terraform_${TERRAFORM_VERSION}_SHA256SUM \
     && shasum -a 256 -c terraform_${TERRAFORM_VERSION}_SHA256SUM \
     && unzip terraform_${TERRAFORM_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip \
-    && rm -f terraform_${TERRAFORM_VERSION}_* hashicorp.asc \
-    && mv terraform /usr/local/bin/ \
-    && terraform -install-autocomplete
+    && rm -f terraform_${TERRAFORM_VERSION}_* /tmp/files/hashicorp.asc \
+    && mv terraform /usr/local/bin/terraform-legacy
+
+# ========================================
+# OpenTofu https://github.com/opentofu/opentofu/releases
+# ========================================
+
+ENV OPENTOFU_VERSION=1.8.0
+
+RUN export BUILD_ARCHITECTURE=$(uname -m); \
+    if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
+    if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
+    curl -LOs https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip \
+    && curl -LOs https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_SHA256SUMS \
+    && /tmp/scripts/install-tofu.sh \
+    && rm -f tofu_${OPENTOFU_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip tofu_${OPENTOFU_VERSION}_SHA256SUMS /tmp/scripts/install-tofu.sh
 
 
 # ========================================
-# TERRAGRUNT
+# TERRAGRUNT https://github.com/gruntwork-io/terragrunt/releases
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.57.1
+ENV TERRAGRUNT_VERSION=0.66.1
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -88,11 +102,11 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 
 
 # ========================================
-# KUBECTL
+# KUBECTL https://github.com/kubernetes/kubectl/tags
 # ========================================
 
 
-ENV KUBECTL_VERSION=1.29.3
+ENV KUBECTL_VERSION=1.30.3
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -106,11 +120,11 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 
 
 # ========================================
-# KUSTOMIZE
+# KUSTOMIZE https://github.com/kubernetes-sigs/kustomize/releases
 # ========================================
 
 
-ENV KUSTOMIZE_VERSION=5.4.1
+ENV KUSTOMIZE_VERSION=5.4.3
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -127,10 +141,10 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 
 
 # ========================================
-# HELM
+# HELM https://github.com/helm/helm/releases
 # ========================================
 
-ENV HELM_VERSION=3.14.4
+ENV HELM_VERSION=3.15.3
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -154,10 +168,10 @@ RUN apt-get update \
     && ln -s /usr/bin/kafkacat /usr/bin/kcat
 
 # ========================================
-# Flux CD
+# Flux CD https://github.com/fluxcd/flux2/releases
 # ========================================
 
-ENV FLUXCD_VERSION=2.2.3
+ENV FLUXCD_VERSION=2.3.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -172,10 +186,10 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     && rm -f flux_checksum.txt flux_${FLUXCD_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz flux_${FLUXCD_VERSION}_checksums.txt
 
 # ========================================
-# Go
+# Go https://go.dev/dl/
 # ========================================
 
-ENV GO_VERSION=1.22.2
+ENV GO_VERSION=1.22.5
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -187,16 +201,16 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 ENV PATH="${PATH}:/usr/local/go/bin"
 
 # ========================================
-# Eksctl
+# Eksctl https://github.com/eksctl-io/eksctl/releases
 # ========================================
 
-ENV EKSCTL_VERSION=0.175.0
+ENV EKSCTL_VERSION=0.188.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
     if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
-    curl -LOs https://github.com/weaveworks/eksctl/releases/download/v${EKSCTL_VERSION}/eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
-    && curl -LO https://github.com/weaveworks/eksctl/releases/download/v${EKSCTL_VERSION}/eksctl_checksums.txt \
+    curl -LOs https://github.com/eksctl-io/eksctl/releases/download/v${EKSCTL_VERSION}/eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
+    && curl -LO https://github.com/eksctl-io/eksctl/releases/download/v${EKSCTL_VERSION}/eksctl_checksums.txt \
     && grep eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz eksctl_checksums.txt > eksctl_checksum.txt \
     && shasum -a 256 -c eksctl_checksum.txt \
     && tar zxvf eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
@@ -205,10 +219,10 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     && rm -f eksctl_checksum.txt eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz eksctl_checksums.txt
 
 # ========================================
-# k9s
+# k9s https://github.com/derailed/k9s/releases
 # ========================================
 
-ENV K9S_VERSION=0.32.4
+ENV K9S_VERSION=0.32.5
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -219,20 +233,18 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     && rm -rf k9s.tar.gz LICENSE README.md \
     && mv k9s /usr/local/bin/
 
-
-
 # ========================================
-# Azure CLI
+# Azure CLI https://learn.microsoft.com/en-us/cli/azure/release-notes-azure-cli
 # ========================================
 
-ENV AZ_VERSION=2.59.0
+ENV AZ_VERSION=2.63.0
 
 RUN pip3 install azure-cli==${AZ_VERSION}
 
 # ========================================
-# 1Password CLI
+# 1Password CLI https://app-updates.agilebits.com/product_history/CLI2
 # ========================================
-ENV OP_CLI_VERSION v2.29.0
+ENV OP_CLI_VERSION=v2.30.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -240,12 +252,6 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     curl -sSfo op.zip https://cache.agilebits.com/dist/1P/op2/pkg/${OP_CLI_VERSION}/op_linux_${BUILD_ARCHITECTURE_ARCH}_${OP_CLI_VERSION}.zip \
     && unzip -od /usr/local/bin/ op.zip \
     && rm op.zip
-
-# ========================================
-# Scripts
-# ========================================
-
-COPY src/scripts /usr/local/bin
 
 # ========================================
 # END
