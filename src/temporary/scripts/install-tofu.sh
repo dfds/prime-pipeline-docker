@@ -11,7 +11,6 @@ if [[ "${CHECKSUM}" = "${EXPECTED_CHECKSUM}" ]]; then
     mv tofu /usr/local/bin
     chmod +x /usr/local/bin/tofu
     tofu -install-autocomplete
-    ln -s /usr/local/bin/tofu /usr/local/bin/terraform
 else
     exit 1
 fi
