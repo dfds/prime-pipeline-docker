@@ -53,7 +53,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 ENV AWS_PAGER=""
 
 # ========================================
-# TERRAFORM - legacy and version locked
+# TERRAFORM - version locked
 # ========================================
 
 ENV TERRAFORM_VERSION=1.5.7
@@ -70,7 +70,8 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     && shasum -a 256 -c terraform_${TERRAFORM_VERSION}_SHA256SUM \
     && unzip terraform_${TERRAFORM_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip \
     && rm -f terraform_${TERRAFORM_VERSION}_* /tmp/files/hashicorp.asc \
-    && mv terraform /usr/local/bin/terraform-legacy
+    && mv terraform /usr/local/bin/terraform \
+    && /usr/local/bin/terraform -install-autocomplete
 
 # ========================================
 # OpenTofu https://github.com/opentofu/opentofu/releases
