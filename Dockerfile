@@ -78,10 +78,10 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     && curl -sSLO https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig \
     && gpg --import /tmp/files/hashicorp.asc \
     && gpg --verify terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig terraform_${TERRAFORM_VERSION}_SHA256SUMS \
-    && grep terraform_${TERRAFORM_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip terraform_${TERRAFORM_VERSION}_SHA256SUMS > terraform_${TERRAFORM_VERSION}_SHA256SUM \
-    && shasum -a 256 -c terraform_${TERRAFORM_VERSION}_SHA256SUM \
+    && grep terraform_${TERRAFORM_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip terraform_${TERRAFORM_VERSION}_SHA256SUMS > SHA256SUM \
+    && sha256sum --check SHA256SUM \
     && unzip terraform_${TERRAFORM_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip \
-    && rm -f terraform_${TERRAFORM_VERSION}_* /tmp/files/hashicorp.asc \
+    && rm -f terraform_${TERRAFORM_VERSION}_* /tmp/files/hashicorp.asc SHA256SUM \
     && mv terraform /usr/local/bin/terraform \
     && /usr/local/bin/terraform -install-autocomplete
 
@@ -96,10 +96,10 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
     curl -sSLO https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip \
     && curl -sSLO https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_SHA256SUMS \
-    && grep tofu_${OPENTOFU_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip tofu_${OPENTOFU_VERSION}_SHA256SUMS > tofu_${OPENTOFU_VERSION}_SHA256SUM \
-    && shasum -a 256 -c tofu_${OPENTOFU_VERSION}_SHA256SUM \
+    && grep tofu_${OPENTOFU_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip tofu_${OPENTOFU_VERSION}_SHA256SUMS > SHA256SUM \
+    && sha256sum --check SHA256SUM \
     && /tmp/scripts/install-tofu.sh \
-    && rm -f tofu_${OPENTOFU_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip tofu_${OPENTOFU_VERSION}_SHA256SUM* /tmp/scripts/install-tofu.sh
+    && rm -f tofu_${OPENTOFU_VERSION}_* /tmp/scripts/install-tofu.sh SHA256SUM
 
 
 # ========================================
@@ -113,11 +113,11 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
     curl -sSLO https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_${BUILD_ARCHITECTURE_ARCH} \
     && curl -sSLO https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/SHA256SUMS \
-    && grep terragrunt_linux_${BUILD_ARCHITECTURE_ARCH} SHA256SUMS > terragrunt_SHA256SUM \
-    && shasum -a 256 -c terragrunt_SHA256SUM \
+    && grep terragrunt_linux_${BUILD_ARCHITECTURE_ARCH} SHA256SUMS > SHA256SUM \
+    && sha256sum --check SHA256SUM \
     && mv terragrunt_linux_${BUILD_ARCHITECTURE_ARCH} /usr/local/bin/terragrunt \
     && chmod +x /usr/local/bin/terragrunt \
-    && rm -f SHA256SUMS terragrunt_SHA256SUM
+    && rm -f SHA256SUM*
 
 
 # ========================================
@@ -150,13 +150,12 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
     curl -sSLO https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
     && curl -sSLO https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/checksums.txt \
-    && grep kustomize_v${KUSTOMIZE_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz checksums.txt > kustomize_linux_${BUILD_ARCHITECTURE_ARCH}_checksum.txt \
-    && shasum -a 256 -c kustomize_linux_${BUILD_ARCHITECTURE_ARCH}_checksum.txt \
+    && grep kustomize_v${KUSTOMIZE_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz checksums.txt > SHA256SUM \
+    && sha256sum --check SHA256SUM \
     && tar -zxvf kustomize_v${KUSTOMIZE_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
-    && rm kustomize_v${KUSTOMIZE_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
     && chmod +x kustomize \
     && mv kustomize /usr/local/bin/ \
-    && rm -f checksums.txt kustomize_linux_${BUILD_ARCHITECTURE_ARCH}_checksum.txt
+    && rm -f rm kustomize_v${KUSTOMIZE_VERSION}_* checksums.txt SHA256SUM
 
 
 # ========================================
@@ -170,10 +169,10 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
     curl -sSLO https://get.helm.sh/helm-v${HELM_VERSION}-linux-${BUILD_ARCHITECTURE_ARCH}.tar.gz \
     && curl -sSLO https://get.helm.sh/helm-v${HELM_VERSION}-linux-${BUILD_ARCHITECTURE_ARCH}.tar.gz.sha256sum \
-    && shasum -a 256 -c helm-v${HELM_VERSION}-linux-${BUILD_ARCHITECTURE_ARCH}.tar.gz.sha256sum \
+    && sha256sum --check helm-v${HELM_VERSION}-linux-${BUILD_ARCHITECTURE_ARCH}.tar.gz.sha256sum \
     && tar zxvf helm-v${HELM_VERSION}-linux-${BUILD_ARCHITECTURE_ARCH}.tar.gz \
     && mv linux-${BUILD_ARCHITECTURE_ARCH}/helm /usr/local/bin/ \
-    && rm -R linux-${BUILD_ARCHITECTURE_ARCH} helm-v${HELM_VERSION}-linux-${BUILD_ARCHITECTURE_ARCH}.tar.gz.* \
+    && rm -rf linux-${BUILD_ARCHITECTURE_ARCH} helm-v${HELM_VERSION}-linux-${BUILD_ARCHITECTURE_ARCH}* CHANGELOG.md \
     && echo "source <(helm completion bash)" >> ~/.bashrc
 
 # ========================================
@@ -187,12 +186,12 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
     curl -sSLO https://github.com/fluxcd/flux2/releases/download/v${FLUXCD_VERSION}/flux_${FLUXCD_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
     && curl -sSLO https://github.com/fluxcd/flux2/releases/download/v${FLUXCD_VERSION}/flux_${FLUXCD_VERSION}_checksums.txt \
-    && grep flux_${FLUXCD_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz flux_${FLUXCD_VERSION}_checksums.txt > flux_checksum.txt \
-    && shasum -a 256 -c flux_checksum.txt \
+    && grep flux_${FLUXCD_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz flux_${FLUXCD_VERSION}_checksums.txt > SHA256SUM \
+    && sha256sum --check SHA256SUM \
     && tar zxvf flux_${FLUXCD_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
     && chmod +x flux \
     && mv flux /usr/local/bin/ \
-    && rm -f flux_checksum.txt flux_${FLUXCD_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz flux_${FLUXCD_VERSION}_checksums.txt
+    && rm -f flux_${FLUXCD_VERSION}_* SHA256SUM
 
 # ========================================
 # Go https://go.dev/dl/
@@ -220,12 +219,12 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
     curl -sSLO https://github.com/eksctl-io/eksctl/releases/download/v${EKSCTL_VERSION}/eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
     && curl -sSLO https://github.com/eksctl-io/eksctl/releases/download/v${EKSCTL_VERSION}/eksctl_checksums.txt \
-    && grep eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz eksctl_checksums.txt > eksctl_checksum.txt \
-    && shasum -a 256 -c eksctl_checksum.txt \
+    && grep eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz eksctl_checksums.txt > SHA256SUM \
+    && sha256sum --check SHA256SUM \
     && tar zxvf eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
     && chmod +x eksctl \
     && mv eksctl /usr/local/bin/ \
-    && rm -f eksctl_checksum.txt eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz eksctl_checksums.txt
+    && rm -f eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz eksctl_checksums.txt SHA256SUM
 
 # ========================================
 # k9s https://github.com/derailed/k9s/releases
@@ -238,12 +237,12 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
     curl -sSLO https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
     && curl -sSLO https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/checksums.sha256 \
-    && grep k9s_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz checksums.sha256 | grep -v sbom > k9s_checksum.txt \
-    && shasum -a 256 -c k9s_checksum.txt \
+    && grep k9s_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz checksums.sha256 | grep -v sbom > SHA256SUM \
+    && sha256sum --check SHA256SUM \
     && tar zxvf k9s_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
     && chmod +x k9s \
     && mv k9s /usr/local/bin/ \
-    && rm -rf LICENSE README.md k9s_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz checksums.sha256
+    && rm -rf LICENSE README.md k9s_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz checksums.sha256 SHA256SUM
 
 # ========================================
 # 1Password CLI https://app-updates.agilebits.com/product_history/CLI2
