@@ -2,7 +2,7 @@
 # CREATE UPDATED BASE IMAGE
 # ========================================
 
-FROM debian:bullseye-slim AS base
+FROM debian:bookworm-slim AS base
 
 RUN apt-get update \
     && apt-get dist-upgrade -y \
@@ -33,8 +33,7 @@ FROM prereqs
 RUN apt-get update \
     && apt-get install -y kafkacat \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && ln -s /usr/bin/kafkacat /usr/bin/kcat
+    && rm -rf /var/lib/apt/lists/*
 
 # ========================================
 # COPY SCRIPTS AND FILES
@@ -275,9 +274,9 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # Azure CLI https://learn.microsoft.com/en-us/cli/azure/release-notes-azure-cli
 # ========================================
 
-ENV AZ_VERSION=2.65.0
+# ENV AZ_VERSION=2.65.0 # Using latest stable version recommended by Microsoft
 
-RUN pip3 install azure-cli==${AZ_VERSION}
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 # ========================================
 # END
