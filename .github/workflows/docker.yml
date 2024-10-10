@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - .github/**
+      - .gitignore
+      - LICENSE
+      - README.md
+      - renovate.json
 
   release:
     types: [published]
@@ -38,7 +44,6 @@ jobs:
         id: scan
         with:
           image: "localbuild/testimage:latest"
-          acs-report-enable: true
           fail-build: false
           severity-cutoff: high
 
