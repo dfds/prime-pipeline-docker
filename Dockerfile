@@ -47,7 +47,7 @@ COPY src/temporary /tmp
 # AWS CLI https://raw.githubusercontent.com/aws/aws-cli/v2/CHANGELOG.rst
 # ========================================
 
-ENV AWS_CLI_VERSION=2.23.7
+ENV AWS_CLI_VERSION=2.27.12
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -87,7 +87,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # OpenTofu https://github.com/opentofu/opentofu/releases
 # ========================================
 
-ENV OPENTOFU_VERSION=1.9.0
+ENV OPENTOFU_VERSION=1.9.1
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -103,7 +103,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # TERRAGRUNT https://github.com/gruntwork-io/terragrunt/releases
 # ========================================
 
-ENV TERRAGRUNT_VERSION=0.72.5
+ENV TERRAGRUNT_VERSION=0.78.2
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -121,7 +121,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 
-ENV KUBECTL_VERSION=1.32.1
+ENV KUBECTL_VERSION=1.33.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -157,7 +157,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # HELM https://github.com/helm/helm/releases
 # ========================================
 
-ENV HELM_VERSION=3.17.0
+ENV HELM_VERSION=3.17.3
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -174,7 +174,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # Flux CD https://github.com/fluxcd/flux2/releases
 # ========================================
 
-ENV FLUXCD_VERSION=2.4.0
+ENV FLUXCD_VERSION=2.5.1
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -191,7 +191,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # Go https://go.dev/dl/
 # ========================================
 
-ENV GO_VERSION=1.23.5
+ENV GO_VERSION=1.24.3
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -206,7 +206,7 @@ ENV PATH="${PATH}:/usr/local/go/bin"
 # Eksctl https://github.com/eksctl-io/eksctl/releases
 # ========================================
 
-ENV EKSCTL_VERSION=0.202.0
+ENV EKSCTL_VERSION=0.207.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -223,7 +223,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # k9s https://github.com/derailed/k9s/releases
 # ========================================
 
-ENV K9S_VERSION=0.32.7
+ENV K9S_VERSION=0.50.6
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -239,7 +239,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 # 1Password CLI https://app-updates.agilebits.com/product_history/CLI2
 # ========================================
-ENV OP_CLI_VERSION=v2.30.3
+ENV OP_CLI_VERSION=v2.31.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
@@ -251,7 +251,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 # Mimirtool https://github.com/grafana/mimir/releases/
 # ========================================
-ENV MIMIRTOOL_VERSION=2.14.3
+ENV MIMIRTOOL_VERSION=2.15.2
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
