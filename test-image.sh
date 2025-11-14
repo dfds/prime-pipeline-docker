@@ -1,6 +1,6 @@
 # If any of these requirements fail the build will fail
 aws --version \
-&& terraform --version \
+&& tofu --version \
 && terragrunt --version \
 && kubectl version --client \
 && kustomize version \

@@ -49,26 +49,6 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 ENV AWS_PAGER=""
 
 # ========================================
-# TERRAFORM - version locked
-# ========================================
-
-ENV TERRAFORM_VERSION=1.5.7
-
-RUN export BUILD_ARCHITECTURE=$(uname -m); \
-    if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
-    if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
-    curl -sSLO https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip \
-    && curl -sSLO https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS \
-    && curl -sSLO https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig \
-    && gpg --import /tmp/files/hashicorp.asc \
-    && gpg --verify terraform_${TERRAFORM_VERSION}_SHA256SUMS.sig terraform_${TERRAFORM_VERSION}_SHA256SUMS \
-    && grep terraform_${TERRAFORM_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip terraform_${TERRAFORM_VERSION}_SHA256SUMS | sha256sum --check \
-    && unzip terraform_${TERRAFORM_VERSION}_linux_${BUILD_ARCHITECTURE_ARCH}.zip \
-    && rm -f terraform_${TERRAFORM_VERSION}_* /tmp/files/hashicorp.asc \
-    && mv terraform /usr/local/bin/terraform \
-    && /usr/local/bin/terraform -install-autocomplete
-
-# ========================================
 # OpenTofu https://github.com/opentofu/opentofu/releases
 # ========================================
 
