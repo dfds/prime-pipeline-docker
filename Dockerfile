@@ -2,13 +2,7 @@
 # CREATE UPDATED BASE IMAGE
 # ========================================
 
-FROM debian:bookworm-slim AS base
-
-RUN apt-get update \
-    && apt-get dist-upgrade -y \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
+FROM debian:bookworm-20251103-slim AS base
 
 # ========================================
 # GENERAL PREREQUISITES
@@ -17,23 +11,14 @@ RUN apt-get update \
 FROM base AS prereqs
 
 RUN apt-get update \
-    && apt-get install -y curl unzip git bash-completion jq ssh sudo gnupg groff gcc vim python3 python3-pip \
+    && apt-get install -y curl unzip git bash-completion jq ssh sudo gnupg groff gcc vim python3 python3-pip kafkacat \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Adding  GitHub public SSH key to known hosts
 RUN ssh -T -o "StrictHostKeyChecking no" -o "PubkeyAuthentication no" git@github.com || true
 
-# ========================================
-# KAFKA MESSAGE PRODUCER
-# ========================================
-
 FROM prereqs
-
-RUN apt-get update \
-    && apt-get install -y kafkacat \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
 
 # ========================================
 # COPY SCRIPTS AND FILES
