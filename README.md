@@ -25,8 +25,10 @@ Releases can be found on [Docker Hub](https://hub.docker.com/r/dfdsdk/prime-pipe
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request to merge with master
 
-Whenever a new commit is submitted to master, a build is triggered in DockerHub.
-After committing, make sure to make a new incremental release in github.
+~~Whenever a new commit is submitted to master, a build is triggered in DockerHub.
+After committing, make sure to make a new incremental release in github.~~
+
+Remember to add a release label to the PR and a automated release, build and publish will happen see .github/workflows/automation-multi-build.yml or https://github.com/dfds/shared-workflows/blob/master/.github/workflows/automation-multi-build.yml for details.
 
 ## License
 
