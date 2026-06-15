@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e pipefail
+
 # Check if eksctl and aws are installed
 command -v aws >/dev/null 2>&1 || { echo >&2 "aws CLI is required but not installed. Aborting."; exit 1; }
 
