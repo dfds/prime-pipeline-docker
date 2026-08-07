@@ -11,7 +11,7 @@ on:
 
 jobs:
   shared:
-    uses: dfds/shared-workflows/.github/workflows/automation-multi-build.yml@v2.0.1
+    uses: dfds/shared-workflows/.github/workflows/automation-multi-build.yml@2.0.5
     secrets: inherit
     with:
       image-repo: dfdsdk/prime-pipeline
