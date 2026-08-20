@@ -1,4 +1,4 @@
-FROM debian:bookworm-20251103-slim AS base
+FROM debian:12.14-slim AS base
 
 # ========================================
 # GENERAL PREREQUISITES
