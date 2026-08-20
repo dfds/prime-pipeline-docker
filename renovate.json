@@ -5,8 +5,8 @@
   ],
   "packageRules": [
     {
-      "matchPackagePatterns": [
-        "*-slim"
+      "matchPackageNames": [
+        "/*-slim/"
       ]
     }
   ]
