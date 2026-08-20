@@ -2,7 +2,7 @@
 # CREATE UPDATED BASE IMAGE
 # ========================================
 
-FROM debian:bookworm-20251103-slim AS base
+FROM debian:bookworm-20260803-slim AS base
 
 # ========================================
 # GENERAL PREREQUISITES
