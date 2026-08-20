@@ -7,7 +7,7 @@
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["debian"],
-      "versioning": "loose"
+      "versioning": "docker"
     }
   ]
 }
