@@ -3,6 +3,7 @@
   "extends": [
     "local>dfds/renovate-config"
   ],
+  "prCreation": "immediate",
   "packageRules": [
     {
       "matchDatasources": ["docker"],
