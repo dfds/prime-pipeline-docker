@@ -5,9 +5,9 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": [
-        "/*-slim/"
-      ]
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["debian"],
+      "versioning": "loose"
     }
   ]
 }
