@@ -64,7 +64,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # TERRAGRUNT https://github.com/gruntwork-io/terragrunt/releases
 # ========================================
 
-ENV TERRAGRUNT_VERSION=1.1.3
+ENV TERRAGRUNT_VERSION=1.1.6
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
