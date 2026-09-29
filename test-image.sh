@@ -7,5 +7,4 @@ aws --version \
 && helm version \
 && flux --version \
 && go version \
-&& eksctl version \
-&& k9s version
+&& eksctl version
