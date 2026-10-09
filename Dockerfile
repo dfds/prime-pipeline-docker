@@ -181,23 +181,6 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
     && rm -f eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz eksctl_checksums.txt
 
 # ========================================
-# k9s https://github.com/derailed/k9s/releases
-# ========================================
-
-ENV K9S_VERSION=0.51.0
-
-RUN export BUILD_ARCHITECTURE=$(uname -m); \
-    if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
-    if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
-    curl -sSLO https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
-    && curl -sSLO https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/checksums.sha256 \
-    && grep k9s_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz checksums.sha256 | grep -v sbom | sha256sum --check \
-    && tar zxvf k9s_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
-    && chmod +x k9s \
-    && mv k9s /usr/local/bin/ \
-    && rm -rf LICENSE README.md k9s_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz checksums.sha256
-
-# ========================================
 # 1Password CLI https://app-updates.agilebits.com/product_history/CLI2
 # ========================================
 ENV OP_CLI_VERSION=v2.39.0
