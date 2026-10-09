@@ -67,7 +67,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 # renovate: datasource=github-releases depName=gruntwork-io/terragrunt
-ENV TERRAGRUNT_VERSION=1.1.3
+ENV TERRAGRUNT_VERSION=1.1.6
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
