@@ -28,6 +28,7 @@ COPY src/temporary /tmp
 # AWS CLI https://raw.githubusercontent.com/aws/aws-cli/v2/CHANGELOG.rst
 # ========================================
 
+# renovate: datasource=github-releases depName=aws/aws-cli
 ENV AWS_CLI_VERSION=2.36.27
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -48,6 +49,7 @@ ENV AWS_PAGER=""
 # OpenTofu https://github.com/opentofu/opentofu/releases
 # ========================================
 
+# renovate: datasource=github-releases depName=opentofu/opentofu
 ENV OPENTOFU_VERSION=1.12.6
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -64,6 +66,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # TERRAGRUNT https://github.com/gruntwork-io/terragrunt/releases
 # ========================================
 
+# renovate: datasource=github-releases depName=gruntwork-io/terragrunt
 ENV TERRAGRUNT_VERSION=1.1.6
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -82,6 +85,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 
+# renovate: datasource=github-releases depName=kubernetes/kubernetes
 ENV KUBECTL_VERSION=1.36.3
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -100,6 +104,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 
+# renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
 ENV KUSTOMIZE_VERSION=5.8.1
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -118,6 +123,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # HELM https://github.com/helm/helm/releases
 # ========================================
 
+# renovate: datasource=github-releases depName=helm/helm
 ENV HELM_VERSION=3.21.4
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -135,6 +141,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # Flux CD https://github.com/fluxcd/flux2/releases
 # ========================================
 
+# renovate: datasource=github-releases depName=fluxcd/flux2
 ENV FLUXCD_VERSION=2.9.4
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -152,6 +159,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # Go https://go.dev/dl/
 # ========================================
 
+# renovate: datasource=golang-version depName=go
 ENV GO_VERSION=1.26.7
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -167,6 +175,7 @@ ENV PATH="${PATH}:/usr/local/go/bin"
 # Eksctl https://github.com/eksctl-io/eksctl/releases
 # ========================================
 
+# renovate: datasource=github-releases depName=eksctl-io/eksctl
 ENV EKSCTL_VERSION=0.230.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -184,6 +193,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # k9s https://github.com/derailed/k9s/releases
 # ========================================
 
+# renovate: datasource=github-releases depName=derailed/k9s
 ENV K9S_VERSION=0.51.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -200,6 +210,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 # 1Password CLI https://app-updates.agilebits.com/product_history/CLI2
 # ========================================
+# renovate: datasource=github-releases depName=1Password/cli
 ENV OP_CLI_VERSION=v2.39.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
@@ -212,6 +223,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 # Mimirtool https://github.com/grafana/mimir/releases/
 # ========================================
+# renovate: datasource=github-releases depName=grafana/mimir
 ENV MIMIRTOOL_VERSION=2.17.11
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
