@@ -124,7 +124,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 # renovate: datasource=github-releases depName=helm/helm
-ENV HELM_VERSION=3.21.4
+ENV HELM_VERSION=3.22.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
