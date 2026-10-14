@@ -192,7 +192,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 # 1Password CLI https://app-updates.agilebits.com/product_history/CLI2
 # ========================================
-# renovate: datasource=github-releases depName=1Password/cli
+
 ENV OP_CLI_VERSION=v2.39.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
