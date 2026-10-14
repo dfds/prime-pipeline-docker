@@ -142,7 +142,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 # renovate: datasource=github-releases depName=fluxcd/flux2
-ENV FLUXCD_VERSION=2.9.4
+ENV FLUXCD_VERSION=2.9.6
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
