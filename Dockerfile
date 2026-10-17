@@ -176,7 +176,7 @@ ENV PATH="${PATH}:/usr/local/go/bin"
 # ========================================
 
 # renovate: datasource=github-releases depName=eksctl-io/eksctl
-ENV EKSCTL_VERSION=0.230.0
+ENV EKSCTL_VERSION=0.231.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
