@@ -86,7 +86,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 
 
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
-ENV KUBECTL_VERSION=1.36.3
+ENV KUBECTL_VERSION=1.37.1
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
