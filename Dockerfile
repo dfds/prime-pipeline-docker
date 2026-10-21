@@ -176,14 +176,14 @@ ENV PATH="${PATH}:/usr/local/go/bin"
 # ========================================
 
 # renovate: datasource=github-releases depName=eksctl-io/eksctl
-ENV EKSCTL_VERSION=0.230.0
+ENV EKSCTL_VERSION=0.231.0
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
     if [ "$BUILD_ARCHITECTURE" = "aarch64" ]; then export BUILD_ARCHITECTURE_ARCH=arm64; fi; \
     curl -sSLO https://github.com/eksctl-io/eksctl/releases/download/v${EKSCTL_VERSION}/eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
     && curl -sSLO https://github.com/eksctl-io/eksctl/releases/download/v${EKSCTL_VERSION}/eksctl_checksums.txt \
-    && grep eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz eksctl_checksums.txt | sha256sum --check \
+    && awk -v file="eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz" '$2 == file' eksctl_checksums.txt | sha256sum --check \
     && tar zxvf eksctl_Linux_${BUILD_ARCHITECTURE_ARCH}.tar.gz \
     && chmod +x eksctl \
     && mv eksctl /usr/local/bin/ \
