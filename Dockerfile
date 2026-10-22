@@ -160,7 +160,7 @@ RUN export BUILD_ARCHITECTURE=$(uname -m); \
 # ========================================
 
 # renovate: datasource=golang-version depName=go
-ENV GO_VERSION=1.27.2
+ENV GO_VERSION=1.27.3
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
