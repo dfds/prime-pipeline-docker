@@ -50,7 +50,7 @@ ENV AWS_PAGER=""
 # ========================================
 
 # renovate: datasource=github-releases depName=opentofu/opentofu
-ENV OPENTOFU_VERSION=1.13.1
+ENV OPENTOFU_VERSION=1.13.2
 
 RUN export BUILD_ARCHITECTURE=$(uname -m); \
     if [ "$BUILD_ARCHITECTURE" = "x86_64" ]; then export BUILD_ARCHITECTURE_ARCH=amd64; fi; \
