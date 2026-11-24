@@ -39,6 +39,10 @@ jobs:
             docker build . --file Dockerfile --tag localbuild/testimage:latest
           fi
 
+      - name: Run image tests (test-image.sh)
+        run: |
+          docker run --rm -v "$PWD:/workspace" -w /workspace localbuild/testimage:latest bash test-image.sh
+
       - name: Run the Anchore scan action itself with GitHub Advanced Security code scanning integration enabled
         uses: anchore/scan-action@v7
         id: scan
